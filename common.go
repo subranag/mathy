@@ -4,11 +4,12 @@ import (
 	"image/color"
 	"math"
 	"math/rand"
+	"time"
 
 	"github.com/fogleman/gg"
 )
 
-var random = rand.New(rand.NewSource(31))
+var random = rand.New(rand.NewSource(time.Now().UnixNano()))
 var plusMinus = []int{-1, 1}
 
 func Randomize(point *gg.Point, minx, maxx, miny, maxy float64) {

@@ -10,23 +10,25 @@ func Sierpinski() {
 
 	RenderInContext(func(width, height float64, dc *gg.Context) {
 
-		jitter := 9
+		jitter := 10
+		layers := 3
+		sizef := float64(0.25)
+		alpha := uint8(30)
 
-		factor := height * 0.25
-		drawSierpinskiLayer(dc, factor, 0, 0, width, height, jitter, 30)
+		for i := 0; i < layers; i++ {
+			factor := height * sizef
+			drawSierpinskiLayer(dc, factor, 0, 0, width, height, jitter, alpha)
+			jitter -= 3
+			alpha += 30
+			sizef += 0.05
+		}
 
-		factor = height * 0.30
-		drawSierpinskiLayer(dc, factor, 0, 0, width, height, jitter-3, 60)
-
-		factor = height * 0.35
-		drawSierpinskiLayer(dc, factor, 0, 0, width, height, jitter-5, 90)
-
-		from := &gg.Point{X: width * 0.5, Y: height * 0.65}
-		factor = height * 0.6
+		center := &gg.Point{X: width * 0.5, Y: height * 0.65}
+		factor := height * 0.6
 		grad := NewRGBLinearGradient(0, 0, width, height, 255)
 		dc.SetStrokeStyle(*grad)
 		dc.SetLineWidth(2)
-		sierpinskiRecurse(dc, from, 7, factor, 3)
+		sierpinskiRecurse(dc, center, 7, factor, 3)
 		dc.Stroke()
 	})
 }
@@ -41,7 +43,6 @@ func drawSierpinskiLayer(dc *gg.Context, factor, x0, y0, x1, y1 float64, jitter 
 		Randomize(point, x0, x1, y0, y1)
 		sierpinskiRecurse(dc, point, 5, factor, jitter)
 	}
-
 	dc.Stroke()
 }
 
