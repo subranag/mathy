@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	mathy.Sierpinski()
+	mathy.Koch()
 }

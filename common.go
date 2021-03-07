@@ -17,6 +17,10 @@ func Randomize(point *gg.Point, minx, maxx, miny, maxy float64) {
 	point.Y = miny + (maxy-miny)*random.Float64()
 }
 
+func Distance(p0, p1 *gg.Point) float64 {
+	return math.Sqrt((p1.X-p0.X)*(p1.X-p0.X) + (p1.Y-p0.Y)*(p1.Y-p0.Y))
+}
+
 func plusOrMinus() int {
 	return plusMinus[random.Intn(len(plusMinus))]
 }
@@ -39,7 +43,7 @@ func NewPointJitter(from *gg.Point, angle, scale float64, jitter int) *gg.Point 
 func RenderInContext(render func(width, height float64, dc *gg.Context)) {
 	// set up everything
 	w := 1920
-	h := 1080
+	h := 1200
 	width := float64(w)
 	height := float64(h)
 	dc := gg.NewContext(w, h)
