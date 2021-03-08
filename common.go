@@ -42,8 +42,8 @@ func NewPointJitter(from *gg.Point, angle, scale float64, jitter int) *gg.Point 
 //RenderInContext creates a canvas and passed the bounds and context to the render function and calls it
 func RenderInContext(render func(width, height float64, dc *gg.Context)) {
 	// set up everything
-	w := 1920
-	h := 1200
+	w := 3840
+	h := 2160
 	width := float64(w)
 	height := float64(h)
 	dc := gg.NewContext(w, h)

@@ -10,18 +10,47 @@ func Koch() {
 
 	RenderInContext(func(width, height float64, dc *gg.Context) {
 
-		grad2 := NewRGBLinearGradient(0, 0, width, height, 255)
-		dc.SetStrokeStyle(*grad2)
-		dc.SetLineWidth(1.5)
+		grad1 := NewRGBLinearGradient(0, 0, width, height, 255)
+		dc.SetStrokeStyle(*grad1)
+		dc.SetLineWidth(6)
 		p0 := &gg.Point{X: 0.3 * width, Y: 0.3 * height}
 		p1 := &gg.Point{X: 0.7 * width, Y: 0.3 * height}
 		dist := Distance(p0, p1)
 		p2 := NewPoint(p0, gg.Radians(60), dist)
 
 		jitter := 1
-		kochRecursive(dc, p0, p1, 4, jitter)
-		kochRecursive(dc, p1, p2, 4, jitter)
-		kochRecursive(dc, p2, p0, 4, jitter)
+		kochRecursive(dc, p0, p1, 3, jitter)
+		kochRecursive(dc, p1, p2, 3, jitter)
+		kochRecursive(dc, p2, p0, 3, jitter)
+
+		gradient := uint8(200)
+		p2.Y += float64(10)
+		p1.X += float64(10)
+		p0.X -= float64(10)
+		reduce := 20
+		i := 0
+		for p0.X > 0 {
+			grad2 := NewRGBLinearGradient(0, 0, width, height, gradient)
+			dc.SetStrokeStyle(*grad2)
+			dc.SetLineWidth(0.5)
+			if i%5 == 0 {
+				jitter += 1
+			}
+
+			if gradient > 50 {
+				gradient -= 2
+			}
+
+			kochRecursive(dc, p0, p1, 3, jitter)
+			kochRecursive(dc, p1, p2, 3, jitter)
+			kochRecursive(dc, p2, p0, 3, jitter)
+
+			p2.Y += float64(reduce)
+			p1.X += float64(reduce)
+			p0.X -= float64(reduce)
+			i += 1
+		}
+
 	})
 }
 
